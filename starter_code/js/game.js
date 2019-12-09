@@ -10,6 +10,9 @@ const Game = {
     score:0,
     fps: 60,
 
+    over: false,
+    request: 0,
+
     init: function(){
         this.canvas = document.getElementById('game-board');
         this.ctx = this.canvas.getContext('2d');
@@ -38,10 +41,11 @@ const Game = {
             //console.log(Math.floor(timestamp/2000) )
             //if (Math.floor(timestamp % 10) === 0) {Game.generateObstacles()}
             Game.clearObstacles();
-            window.requestAnimationFrame(refresh)
+            if(Game.isCollision()) {Game.gameOver()};
+            if (!Game.over) {window.requestAnimationFrame(refresh)}
         }
         //recordar borrar los obstaculos 
-        window.requestAnimationFrame(refresh);
+        this.request = window.requestAnimationFrame(refresh);
         this.reset(); //como usar los fps?
     },
 
@@ -77,6 +81,18 @@ const Game = {
 
     clearObstacles: function() {
         this.obstacles = this.obstacles.filter(obstacle => (obstacle.posX >= -50))
-      }
+    },
+
+    isCollision: function() {
+       // return this.obstacles.some(obs => (this.player.posX + this.player.width > obs.posX && obs.posX + obs.width > this.player.posX ))
+        if (this.player.posY  + this.player.height >= 504) {this.gameOver()}
+        return this.obstacles.some(obs => (this.player.posX + this.player.width > obs.posX && obs.posX + obs.width > this.player.posX && (this.player.posY > obs.posY + 550 || this.player.posY < obs.posY + 400 )))
+    },
+
+    gameOver: function() {
+        //console.log("over")
+        this.over = true;
+        //window.cancelAnimationFrame(Game.request);
+    }
 }
 

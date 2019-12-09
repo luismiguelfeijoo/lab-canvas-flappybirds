@@ -16,7 +16,7 @@ class Player {
 
     this.posX = 100;
     this.posY = 180;
-    this.posY0 = 490 - this.height;
+    this.posY0 = 504;
 
     this.setListeners();
   }
@@ -33,16 +33,14 @@ class Player {
 
   move() {
     
-    if(this.posY <= this.posY0) {
+    //if(this.posY <= this.posY0) {
       if (this.vy < 10) { // to set max Y velocity
         this.vy += this.gravity
       }
       this.posY += this.vy;
       //this.vy += this.gravity;
       //console.log(this.posY,this.vy,this.gravity)
-    } else {
-      this.posY = 504 - this.height;
-    }
+    //} else {}
   };
 
   /*
