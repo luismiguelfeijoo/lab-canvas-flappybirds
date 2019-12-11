@@ -43,20 +43,10 @@ class Player {
     //} else {}
   };
 
-  /*
-  newPos() {
-    if (this.posY > 0) {
-        this.posY += this.vy;
-        console.log(this.vy)
-    }
-    
-  }
-  */
-
   setListeners() {
       document.addEventListener("keydown", (e) => {
         if (e.keyCode === 32) {
-          this.vy = -10;
+          this.vy = -8;
           //this.posY -= 20;
         }
       }) 

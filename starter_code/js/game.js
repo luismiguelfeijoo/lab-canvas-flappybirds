@@ -76,7 +76,6 @@ const Game = {
 
     generateObstacles: function() {
         this.obstacles.push(new Obstacle(this.ctx, this.width, this.height))
-        console.log("generating")
     },
 
     clearObstacles: function() {
@@ -86,7 +85,7 @@ const Game = {
     isCollision: function() {
        // return this.obstacles.some(obs => (this.player.posX + this.player.width > obs.posX && obs.posX + obs.width > this.player.posX ))
         if (this.player.posY  + this.player.height >= 504) {this.gameOver()}
-        return this.obstacles.some(obs => (this.player.posX + this.player.width > obs.posX && obs.posX + obs.width > this.player.posX && (this.player.posY > obs.posY + 550 || this.player.posY < obs.posY + 400 )))
+        return this.obstacles.some(obs => (this.player.posX + this.player.width > obs.posX && obs.posX + obs.width > this.player.posX && (this.player.posY + this.player.height > obs.posY + 550 || this.player.posY < obs.posY + 400 )))
     },
 
     gameOver: function() {
