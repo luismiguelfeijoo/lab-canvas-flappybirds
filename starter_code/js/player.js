@@ -1,16 +1,23 @@
 class Player {
-  constructor(ctx /*speedX, speedY, gravitySpeed*/) {
+  constructor(ctx, fps/*speedX, speedY, gravitySpeed*/) {
     this.ctx = ctx;
+    
     this.width = 49.8;
     this.height = 35.1;
+
     this.image = new Image();
     this.image.src = "./images/flappy.png";
-    this.speedX = 0;
-    this.speedY = 0;
-    this.gravity = -0.9;
+
+    //this.speedX = 0;
+    //this.speedY = 0;
+    this.fps = fps
+    this.gravity = 30/fps;
+    this.vy = 0;
+
     this.posX = 100;
     this.posY = 180;
-    //this.gravitySpeed = 1
+    this.posY0 = 504;
+
     this.setListeners();
   }
 
@@ -25,28 +32,23 @@ class Player {
   }
 
   move() {
-    //this.gravitySpeed = this.gravity
     
-    this.gravity ++;
-    
-    this.newPos();
-    console.log("movePlayer")
+    //if(this.posY <= this.posY0) {
+      if (this.vy < 10) { // to set max Y velocity
+        this.vy += this.gravity
+      }
+      this.posY += this.vy;
+      //this.vy += this.gravity;
+      //console.log(this.posY,this.vy,this.gravity)
+    //} else {}
   };
-
-  newPos() {
-    if (this.posY > 0) {
-        this.posY -= this.gravity;
-    }
-    
-  }
 
   setListeners() {
       document.addEventListener("keydown", (e) => {
         if (e.keyCode === 32) {
-            this.move()
-            console.log("hola")
+          this.vy = -8;
+          //this.posY -= 20;
         }
       }) 
-      console.log("setlist")
   }
 }
