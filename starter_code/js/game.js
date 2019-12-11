@@ -26,19 +26,21 @@ const Game = {
         let delta = 0;
         let fps = 0;
         let proof = -100;
+        let count = 2.7;
         function refresh(timestamp) {
             delta = timestamp - past;
             past = timestamp;
             fps = 1000/delta;
-            //console.log(fps)
-            //Game.fps = 1000/delta
             Game.clear();
             Game.drawAll();
             Game.moveAll();
             let secondsCounter = Math.floor(timestamp/2000)
             if (secondsCounter === proof + 1) {Game.generateObstacles()}
+            if ((timestamp/2000) >= count) {
+                Game.score ++;
+                count += 1;
+            }
             proof = secondsCounter;
-            //console.log(Math.floor(timestamp/2000) )
             //if (Math.floor(timestamp % 10) === 0) {Game.generateObstacles()}
             Game.clearObstacles();
             if(Game.isCollision()) {Game.gameOver()};
@@ -54,7 +56,7 @@ const Game = {
         this.background = new Background(this.ctx,this.width*2,this.height);
         this.player = new Player(this.ctx,Game.fps) //added game fps
         this.obstacles = [];
-        //scoreBoard.init()
+        ScoreBoard.init(this.ctx, this.score)
     },
 
     clear: function() {
@@ -65,7 +67,7 @@ const Game = {
         this.background.draw();
         this.player.draw(/*this.framesCounter*/)
         this.obstacles.forEach(obstacle => obstacle.draw())
-        //ScoreBoard.init(this.ctx,this.score);
+        ScoreBoard.draw(this.score)
     },
 
     moveAll: function() {
